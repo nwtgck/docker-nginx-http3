@@ -1,4 +1,3 @@
-# TODO: Reduce image size (e.g. by using multi-stage build)
 FROM ubuntu:18.04
 
 LABEL maintainer="Ryo Ota <nwtgck@gmail.com>"
@@ -8,15 +7,13 @@ ENV PATCH_NGINX_VERSION=1.16
 ENV NGINX_VERSION=${PATCH_NGINX_VERSION}.1 \
     QUICHE_REVISION=a0e69eda9da97ebb03ccda38f4bb58cfea572163
 
-# Install requirements
 RUN apt update && \
-    apt install -y curl git build-essential libpcre3 libpcre3-dev zlib1g-dev cmake golang-go && \
+    # Install requirements
+    apt install -y curl git build-essential cmake golang-go libpcre3 libpcre3-dev zlib1g-dev && \
     # Install Rust
     # NOTE: Rust version is not fixed
-    curl https://sh.rustup.rs -sSf | sh -s -- -y
-
-# Intall Nginx
-RUN PATH="/root/.cargo/bin:$PATH" && \
+    curl https://sh.rustup.rs -sSf | sh -s -- -y && \
+    PATH="/root/.cargo/bin:$PATH" && \
     mkdir build && cd build && \
      # Download Nginx
     curl https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz | tar zx && \
@@ -38,6 +35,12 @@ RUN PATH="/root/.cargo/bin:$PATH" && \
    make && \
    # Install Nginx
    make install && \
-   rm -rf /build
+   rm -rf /build && \
+   # Remove build requirements
+   apt purge -y curl git build-essential cmake golang-go && \
+   apt autoclean && apt clean && apt autoremove -y && \
+   # TODO: Remove Rust, but the following command causes 'error: No such file or directory (os error 2)'
+   # rustup self uninstall -y && \
+   rm -rf /var/lib/apt/lists/*
 
 CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
