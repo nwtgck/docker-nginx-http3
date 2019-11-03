@@ -39,8 +39,9 @@ RUN apt update && \
    # Remove build requirements
    apt purge -y curl git build-essential cmake golang-go && \
    apt autoclean && apt clean && apt autoremove -y && \
-   # TODO: Remove Rust, but the following command causes 'error: No such file or directory (os error 2)'
-   # rustup self uninstall -y && \
+   # Uninstall Rust
+   # NOTE: `rustup self uninstall -y` causes 'error: No such file or directory (os error 2)'
+   rm -rf $HOME/.cargo $HOME/.rustup && \
    rm -rf /var/lib/apt/lists/*
 
 CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
