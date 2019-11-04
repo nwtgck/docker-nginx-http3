@@ -44,7 +44,7 @@ jobs:
         openssl genrsa 2024 > $SSL_CERTS_PATH/server.key
         openssl req -new -key $SSL_CERTS_PATH/server.key -subj "/C=EN" > $SSL_CERTS_PATH/server.csr
         openssl x509 -req -days 3650 -signkey $SSL_CERTS_PATH/server.key < $SSL_CERTS_PATH/server.csr > $SSL_CERTS_PATH/server.crt
-    # TODO: Make "Install HTTP/3 client" and "Docker image build" parallel
+    # TODO: Make "Install HTTP/3 client" and "Build Docker image" parallel
     - name: Install HTTP/3 client
       run: |
         set -eu
@@ -57,13 +57,15 @@ jobs:
         # (from: https://stackoverflow.com/questions/5724513/in-git-how-do-i-figure-out-what-my-current-revision-is/5724755#5724755)
         git rev-parse HEAD
         cargo build --examples
+    - name: Build Docker image
+      run: docker build -t nginx-http3 .
     - name: Run HTTP/3 server
       run: |
         docker run -d -p 443:443 -p 443:443/udp \
           -v $PWD/nginx.conf:/usr/local/nginx/conf/nginx.conf \
           -v $PWD/docker_volumes/ssl_certs/server.crt:/etc/ssl/certs/server.crt \
           -v $PWD/docker_volumes/ssl_certs/server.key:/etc/ssl/private/server.key \
-          nwtgck/nginx-http3
+          nginx-http3
     - name: HTTP/3 connection test
       run: |
         set -eu
