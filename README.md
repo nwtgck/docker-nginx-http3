@@ -13,7 +13,7 @@ docker pull nwtgck/nginx-http3
 Here is an example using this image with Docker Compose.
 - [Reverse proxy example using Docker Compose](https://github.com/nwtgck/ghost-nginx-http3-docker-compose)  
 
-`nginx.conf` in the example might help how to use.
+`nginx.conf` in the example might help you to know how to use this image.
 
 ## HTTP/3 in Google Chrome Canary
 
