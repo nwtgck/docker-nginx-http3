@@ -1,5 +1,5 @@
 # docker-nginx-http3
-[![](https://images.microbadger.com/badges/image/nwtgck/nginx-http3.svg)](https://microbadger.com/images/nwtgck/nginx-http3 "Get your own image badge on microbadger.com")
+[![GitHub Actions](https://github.com/nwtgck/docker-nginx-http3/workflows/Docker%20Image%20CI/badge.svg)](https://github.com/nwtgck/docker-nginx-http3/actions) [![](https://images.microbadger.com/badges/image/nwtgck/nginx-http3.svg)](https://microbadger.com/images/nwtgck/nginx-http3 "Get your own image badge on microbadger.com")
 
 Docker image for Nginx + HTTP/3 powered by [Quiche](https://github.com/cloudflare/quiche)
 
