@@ -66,6 +66,8 @@ jobs:
           -v $PWD/docker_volumes/ssl_certs/server.crt:/etc/ssl/certs/server.crt \
           -v $PWD/docker_volumes/ssl_certs/server.key:/etc/ssl/private/server.key \
           nginx-http3
+    - name: Show Nginx version
+      run: docker run --rm nginx-http3 /usr/local/nginx/sbin/nginx -V
     - name: HTTP/3 connection test
       run: |
         set -eu
