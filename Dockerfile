@@ -5,7 +5,7 @@ LABEL maintainer="Ryo Ota <nwtgck@gmail.com>"
 # Versions
 ENV PATCH_NGINX_VERSION=1.16
 ENV NGINX_VERSION=${PATCH_NGINX_VERSION}.1 \
-    QUICHE_REVISION=abf3f50a589bd827f3301eed727d875de6022e53
+    QUICHE_REVISION=c93c09fdb83db65a10264c3eb63d3400403e9d7e
 
 RUN apt update && \
     # Install requirements
@@ -26,6 +26,7 @@ RUN apt update && \
    patch -p01 < ../quiche/extras/nginx/nginx-${PATCH_NGINX_VERSION}.patch && \
    # Configure
    ./configure                                 \
+       --build="quiche-$(git --git-dir=../quiche/.git rev-parse --short HEAD)" \
        --with-http_ssl_module                  \
        --with-http_v2_module                   \
        --with-http_v3_module                   \
