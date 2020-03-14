@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-LABEL maintainer="Ryo Ota <nwtgck@gmail.com>"
+LABEL maintainer="Ryo Ota <nwtgck@nwtgck.org>"
 
 # Versions
 ENV PATCH_NGINX_VERSION=1.16
