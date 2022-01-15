@@ -41,7 +41,7 @@ jobs:
         set -eu
         SSL_CERTS_PATH=./docker_volumes/ssl_certs
         mkdir -p $SSL_CERTS_PATH
-        openssl genrsa 2024 > $SSL_CERTS_PATH/server.key
+        openssl genrsa 2048 > $SSL_CERTS_PATH/server.key
         openssl req -new -key $SSL_CERTS_PATH/server.key -subj "/C=EN" > $SSL_CERTS_PATH/server.csr
         openssl x509 -req -days 3650 -signkey $SSL_CERTS_PATH/server.key < $SSL_CERTS_PATH/server.csr > $SSL_CERTS_PATH/server.crt
     # TODO: Make "Install HTTP/3 client" and "Build Docker image" parallel
