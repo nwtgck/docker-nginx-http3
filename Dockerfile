@@ -5,7 +5,7 @@ LABEL maintainer="Ryo Ota <nwtgck@nwtgck.org>"
 # Versions
 ENV QUICHE_NGINX_PATCH=1.16
 ENV NGINX_VERSION=1.19.6 \
-    QUICHE_REVISION=6437b3c2db0dd3c1d6c76cb71d784c874b185d01
+    QUICHE_VERSION=0.12.0
 
 RUN apt update && \
     # Install requirements
@@ -16,7 +16,7 @@ RUN apt update && \
     # Get Quiche
     git clone --recursive https://github.com/cloudflare/quiche && \
     cd quiche && \
-    git checkout tags/0.12.0
+    git checkout tags/${0.12.0}
 RUN cd /build/nginx-${NGINX_VERSION} && \
    # Apply patch to Nginx
    patch -p01 < ../quiche/nginx/nginx-${QUICHE_NGINX_PATCH}.patch; exit 0
