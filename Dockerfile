@@ -3,9 +3,9 @@ FROM ubuntu:18.04
 LABEL maintainer="Ryo Ota <nwtgck@nwtgck.org>"
 
 # Versions
-ENV PATCH_NGINX_VERSION=1.16
-ENV NGINX_VERSION=${PATCH_NGINX_VERSION}.1 \
-    QUICHE_REVISION=92dcc500462ac22bb72e822d3f4e99039d29acfd
+ENV PATCH_NGINX_VERSION=1.21
+ENV NGINX_VERSION=${PATCH_NGINX_VERSION}.6 \
+    QUICHE_REVISION=6437b3c2db0dd3c1d6c76cb71d784c874b185d01
 
 RUN apt update && \
     # Install requirements
@@ -23,7 +23,7 @@ RUN apt update && \
     git checkout ${QUICHE_REVISION} && \
     cd /build/nginx-${NGINX_VERSION} && \
    # Apply patch to Nginx
-   patch -p01 < ../quiche/extras/nginx/nginx-${PATCH_NGINX_VERSION}.patch && \
+   patch -p01 < ../quiche/nginx/nginx-${PATCH_NGINX_VERSION}.patch && \
    # Configure
    ./configure                                 \
        --build="quiche-$(git --git-dir=../quiche/.git rev-parse --short HEAD)" \
