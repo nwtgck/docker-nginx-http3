@@ -23,7 +23,7 @@ RUN apt update && \
     git checkout ${QUICHE_REVISION} && \
     cd /build/nginx-${NGINX_VERSION} && \
    # Apply patch to Nginx
-   patch -p01 < ../quiche/nginx/nginx-${PATCH_NGINX_VERSION}.patch && \
+   patch -p01 < ../quiche/nginx/nginx-1.16.patch && \
    # Configure
    ./configure                                 \
        --build="quiche-$(git --git-dir=../quiche/.git rev-parse --short HEAD)" \
