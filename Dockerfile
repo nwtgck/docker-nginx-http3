@@ -31,7 +31,7 @@ RUN cd /build/nginx-${NGINX_VERSION} && \
        --with-http_ssl_module                  \
        --with-http_v2_module                   \
        --with-http_v3_module                   \
-       --with-openssl=../quiche/deps/boringssl \
+       --with-openssl=../quiche/quiche/deps/boringssl \
        --with-quiche=../quiche && \
    # Build Nginx
    make && \
