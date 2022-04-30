@@ -1,7 +1,10 @@
 # (base: https://github.com/actions/starter-workflows/blob/a8bbec520078bf8f6c85a31ca4e7ea3751ab35b3/ci/docker-image.yml)
 name: Docker Image CI
 
-on: [push]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
