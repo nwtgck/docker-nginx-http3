@@ -9,11 +9,7 @@ ENV NGINX_VERSION=${PATCH_NGINX_VERSION}.6 \
 
 RUN apt update && \
     # Install requirements
-    apt install -y curl git build-essential cmake golang-go libpcre3 libpcre3-dev zlib1g-dev && \
-    # Install Rust
-    # NOTE: Rust version is not fixed
-    curl https://sh.rustup.rs -sSf | sh -s -- -y && \
-    PATH="/root/.cargo/bin:$PATH" && \
+    apt install -y curl git build-essential cmake golang-go libpcre3 libpcre3-dev zlib1g-dev rustc cargo && \
     mkdir build && cd build && \
      # Download Nginx
     curl https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz | tar zx && \
