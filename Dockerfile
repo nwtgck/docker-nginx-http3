@@ -3,8 +3,8 @@ FROM ubuntu:18.04
 LABEL maintainer="Ryo Ota <nwtgck@nwtgck.org>"
 
 # Versions
-ENV PATCH_NGINX_VERSION=1.19
-ENV NGINX_VERSION=${PATCH_NGINX_VERSION}.6 \
+ENV QUICHE_NGINX_PATCH=1.16
+ENV NGINX_VERSION=1.19.6 \
     QUICHE_REVISION=6437b3c2db0dd3c1d6c76cb71d784c874b185d01
 
 RUN apt update && \
@@ -19,7 +19,7 @@ RUN apt update && \
     git checkout tags/0.12.0
 RUN cd /build/nginx-${NGINX_VERSION} && \
    # Apply patch to Nginx
-   patch -p01 < ../quiche/nginx/nginx-1.16.patch; exit 0
+   patch -p01 < ../quiche/nginx/nginx-${QUICHE_NGINX_PATCH}.patch; exit 0
    # Configure
 RUN cd /build/nginx-${NGINX_VERSION} && \
      ./configure                                 \
