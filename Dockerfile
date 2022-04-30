@@ -20,12 +20,12 @@ RUN apt update && \
     # Get Quiche
     git clone --recursive https://github.com/cloudflare/quiche && \
     cd quiche && \
-    git checkout ${QUICHE_REVISION} && \
-    cd /build/nginx-${NGINX_VERSION} && \
+    git checkout ${QUICHE_REVISION}
+RUN cd /build/nginx-${NGINX_VERSION} && \
    # Apply patch to Nginx
-   patch -p01 < ../quiche/nginx/nginx-1.16.patch && \
+   patch -p01 < ../quiche/nginx/nginx-1.16.patch; exit 0
    # Configure
-   ./configure                                 \
+RUN ./configure                                 \
        --build="quiche-$(git --git-dir=../quiche/.git rev-parse --short HEAD)" \
        --with-http_ssl_module                  \
        --with-http_v2_module                   \
