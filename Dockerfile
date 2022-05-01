@@ -16,7 +16,7 @@ RUN apt update && \
     # Get Quiche
     git clone --recursive https://github.com/cloudflare/quiche && \
     cd quiche && \
-    git checkout tags/${0.12.0}
+    git checkout tags/${QUICHE_VERSION}
 RUN cd /build/nginx-${NGINX_VERSION} && \
    # Apply patch to Nginx
    patch -p01 < ../quiche/nginx/nginx-${QUICHE_NGINX_PATCH}.patch; exit 0
