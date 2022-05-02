@@ -3,8 +3,9 @@ FROM ubuntu:18.04
 LABEL maintainer="Ryo Ota <nwtgck@nwtgck.org>"
 
 # Versions
-ENV QUICHE_NGINX_PATCH=1.16
-ENV NGINX_VERSION=1.19.6 \
+ENV QUICHE_NGINX_PATCH_1=1.16
+ENV QUICHE_NGINX_PATCH_2=1.19.7
+ENV NGINX_VERSION=1.21.6 \
     QUICHE_VERSION=0.12.0
 
 RUN apt update && \
@@ -16,10 +17,12 @@ RUN apt update && \
     # Get Quiche
     git clone --recursive https://github.com/cloudflare/quiche && \
     cd quiche && \
-    git checkout tags/${QUICHE_VERSION}
+    git checkout tags/${QUICHE_VERSION} && \
+    curl -L https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/patches/nginx-http3-1.19.7.patch -o ./quiche/nginx/nginx-http3-1.19.7.patch
 RUN cd /build/nginx-${NGINX_VERSION} && \
    # Apply patch to Nginx
-   patch -p01 < ../quiche/nginx/nginx-${QUICHE_NGINX_PATCH}.patch; exit 0
+   patch -p01 < ../quiche/nginx/nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0
+   patch -p01 < ../quiche/nginx/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0
    # Configure
 RUN cd /build/nginx-${NGINX_VERSION} && \
      ./configure                                 \
