@@ -18,7 +18,7 @@ RUN apt update && \
     git clone --recursive https://github.com/cloudflare/quiche && \
     cd quiche && \
     git checkout tags/${QUICHE_VERSION} && \
-    curl -L https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/patches/nginx-http3-1.19.7.patch -o ./quiche/nginx/nginx-http3-1.19.7.patch
+    curl -L https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/patches/nginx-http3-1.19.7.patch -o nginx/nginx-http3-1.19.7.patch
 RUN cd /build/nginx-${NGINX_VERSION} && \
    # Apply patch to Nginx
    patch -p01 < ../quiche/nginx/nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0
