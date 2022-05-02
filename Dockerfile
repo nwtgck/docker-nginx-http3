@@ -22,6 +22,7 @@ RUN apt update && \
 RUN cd /build/nginx-${NGINX_VERSION} && \
    # Apply patch to Nginx
    patch -p01 < ../quiche/nginx/nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0
+RUN cd /build/nginx-${NGINX_VERSION} && \
    patch -p01 < ../quiche/nginx/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0
    # Configure
 RUN cd /build/nginx-${NGINX_VERSION} && \
