@@ -35,7 +35,8 @@ RUN cd /build/nginx-${NGINX_VERSION} && \
        --with-quiche=../quiche && \
    # Build Nginx
    make
-   
+
+FROM ubuntu:22.10
 COPY --from=nginxbuilder /build /build
    # Install Nginx
 RUN cd /build && \
