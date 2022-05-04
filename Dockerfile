@@ -26,7 +26,7 @@ RUN apt update && \
     curl -L https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/patches/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch -o nginx/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch
 RUN cd /build/nginx && \
    # Apply patch to Nginx
-   patch -p01 < ../quiche/nginx/${QUICHE_NGINX_PATCH_1}.patch; exit 0
+   patch -p01 < ../quiche/nginx/nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0
 RUN cd /build/nginx && \
    patch -p01 < ../quiche/nginx/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0
    # Configure
