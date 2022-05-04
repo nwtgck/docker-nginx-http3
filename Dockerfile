@@ -5,8 +5,8 @@ LABEL maintainer="Ryo Ota <nwtgck@nwtgck.org>"
 # Versions
 ENV QUICHE_NGINX_PATCH_1=1.16
 ENV QUICHE_NGINX_PATCH_2=1.19.7
-ENV NGINX_VERSION=1.21.6 \
-    QUICHE_VERSION=0.12.0
+ENV NGINX_VERSION=1.21.6
+ENV QUICHE_VERSION=0.12.0
 
 RUN apt update && \
     # Install requirements
