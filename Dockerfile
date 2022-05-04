@@ -1,4 +1,4 @@
-FROM ubuntu:22.10 as ngxbuilder
+FROM ubuntu:22.10
 
 LABEL maintainer="Ryo Ota <nwtgck@nwtgck.org>"
 
@@ -34,14 +34,10 @@ RUN cd /build/nginx-${NGINX_VERSION} && \
        --with-openssl=../quiche/quiche/deps/boringssl \
        --with-quiche=../quiche && \
    # Build Nginx
-   make
+   make && make install
 
-FROM ubuntu:22.10
-COPY --from=nginxbuilder /build /build
    # Install Nginx
-RUN cd /build && \
-   make install && \
-   rm -rf /build && \
+RUN rm -rf /build && \
    # Remove build requirements
    apt purge -y curl git build-essential cmake golang-go cargo rustc && \
    apt autoclean && apt clean && apt autoremove -y && \
