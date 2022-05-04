@@ -6,8 +6,8 @@ LABEL maintainer="Ryo Ota <nwtgck@nwtgck.org>"
 # Versions
 ENV QUICHE_NGINX_PATCH_1=1.16
 ENV QUICHE_NGINX_PATCH_2=1.19.7
-#ENV NGINX_VERSION=nginx-1.21.6
-ENV OPENRESTY_VERSION=openresty-1.21.4.1rc3
+ENV NGINX_VERSION=nginx-1.21.6
+#ENV OPENRESTY_VERSION=openresty-1.21.4.1rc3
 ENV QUICHE_VERSION=0.12.0
 
 RUN apt update && \
@@ -15,10 +15,10 @@ RUN apt update && \
     apt install -y curl git build-essential cmake golang-go libpcre3 libpcre3-dev zlib1g-dev rustc cargo && \
     mkdir build && cd build && \
      # Download Nginx
-#    curl https://nginx.org/download/${NGINX_VERSION}.tar.gz | tar zx && \
-#    mv ${NGINX_VERSION} nginx && \
-    curl "https://openresty.org/download/${OPENRESTY_VERSION}.tar.gz" | tar zx && \
-    mv ${OPENRESTY_VERSION} nginx && \
+    curl https://nginx.org/download/${NGINX_VERSION}.tar.gz | tar zx && \
+    mv ${NGINX_VERSION} nginx && \
+#    curl "https://openresty.org/download/${OPENRESTY_VERSION}.tar.gz" | tar zx && \
+#    mv ${OPENRESTY_VERSION} nginx && \
     # Get Quiche
     git clone --recursive https://github.com/cloudflare/quiche && \
     cd quiche && \
