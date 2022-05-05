@@ -1,5 +1,6 @@
 FROM debian:bullseye-slim
 ENV DEBIAN_FRONTEND=noninteractive
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 LABEL maintainer="Ryo Ota <nwtgck@nwtgck.org>"
 
