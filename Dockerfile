@@ -118,7 +118,7 @@ RUN rm /etc/apt/sources.list && \
     apt autoclean && \
     apt clean && \
     apt autoremove -y && \
-    apt -o DPkg::Options::="--force-confnew" -y install gcc -y && \
+    apt -o DPkg::Options::="--force-confnew" -y install gcc make -y && \
 # install & clean up
     cd /build && \
     make install && \
