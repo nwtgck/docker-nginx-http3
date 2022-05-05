@@ -60,6 +60,8 @@ RUN cd build && ./configure \
     --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
     --user=nginx \
     --group=nginx \
+    --with-pcre-jit \
+    --with-ipv6 \
     --with-compat \
     --with-threads \
     --with-http_addition_module \
@@ -88,7 +90,7 @@ RUN cd build && ./configure \
     --add-module=/build/ngx_brotli \
     --with-openssl=/build/quiche/quiche/deps/boringssl \
     --with-quiche=/build/quiche \
-    && make -j2 && make install && rm -rf /build && ln -s /usr/local/lib/libluajit-5.1.so.2 /lib/libluajit-5.1.so.2
+    && make -j2 && make install && rm -rf /build && 
 
 # Cleanup
 RUN rm -rf /build && \
