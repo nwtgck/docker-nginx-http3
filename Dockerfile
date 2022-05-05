@@ -118,7 +118,7 @@ RUN rm /etc/apt/sources.list && \
     apt autoclean && \
     apt clean && \
     apt autoremove -y && \
-    apt -o DPkg::Options::="--force-confnew" -y install gcc make -y && \
+    apt -o DPkg::Options::="--force-confnew" -y install make gcc perl -y && \
 # install & clean up
     cd /build && \
     make install && \
