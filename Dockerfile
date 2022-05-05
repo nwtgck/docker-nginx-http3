@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:bullseye
 ENV DEBIAN_FRONTEND=noninteractive
 
 LABEL maintainer="Ryo Ota <nwtgck@nwtgck.org>"
