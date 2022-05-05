@@ -15,7 +15,7 @@ RUN rm /etc/apt/sources.list && \
     echo "deb http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list && \
     echo "deb http://deb.debian.org/debian/ bullseye-updates main" >> /etc/apt/sources.list && \
     echo "deb http://security.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list && \
-    apt update -y && apt upgrade -y --allow-downgrades && apt dist-upgrade -y --allow-downgrades && apt autoclean && apt clean && apt autoremove -y && apt -o DPkg::Options::="--force-confnew" -y install python3 python3-pip libcrypt1 libc-dev-bin libc-devtools libc6-dev-amd64-cross libc6-amd64-cross uuid-dev make build-essential curl wget libpcre3 libpcre3-dev zlib1g-dev git brotli patch git unzip cmake libssl-dev perl certbot -y && \
+    apt update -y && apt upgrade -y --allow-downgrades && apt dist-upgrade -y --allow-downgrades && apt autoclean && apt clean && apt autoremove -y && apt -o DPkg::Options::="--force-confnew" -y install uuid-dev make build-essential curl wget libpcre3 libpcre3-dev zlib1g-dev git brotli patch git unzip cmake libssl-dev -y && \
 
 # Rust
     curl https://sh.rustup.rs -sSf | sh -s -- -y && \
