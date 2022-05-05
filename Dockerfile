@@ -90,7 +90,7 @@ RUN cd build && ./configure \
     --add-module=/build/ngx_brotli \
     --with-openssl=/build/quiche/quiche/deps/boringssl \
     --with-quiche=/build/quiche \
-    && make -j2 && make install && rm -rf /build && 
+    && make -j2 && make install && rm -rf /build
 
 # Cleanup
 RUN rm -rf /build && \
