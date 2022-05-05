@@ -1,7 +1,6 @@
 FROM debian:bullseye-slim as builder
 
-ENV DEBIAN_FRONTEND=noninteractive \
-    PATH="/root/.cargo/bin:${PATH}" \
+ENV PATH="/root/.cargo/bin:${PATH}" \
 # Versions
     NGINX_VERSION=nginx-1.21.4 \
     OPENRESTY_VERSION=openresty-1.21.4.1rc3 \
@@ -15,7 +14,13 @@ RUN rm /etc/apt/sources.list && \
     echo "deb http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list && \
     echo "deb http://deb.debian.org/debian/ bullseye-updates main" >> /etc/apt/sources.list && \
     echo "deb http://security.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list && \
-    apt update -y && apt upgrade -y --allow-downgrades && apt dist-upgrade -y --allow-downgrades && apt autoclean && apt clean && apt autoremove -y && apt -o DPkg::Options::="--force-confnew" -y install uuid-dev make build-essential curl wget libpcre3 libpcre3-dev zlib1g-dev git brotli patch git unzip cmake libssl-dev -y && \
+    apt update -y && \
+    apt upgrade -y --allow-downgrades && \
+    apt dist-upgrade -y --allow-downgrades && \
+    apt autoclean && \
+    apt clean && \
+    apt autoremove -y && \
+    apt -o DPkg::Options::="--force-confnew" -y install uuid-dev make build-essential curl wget libpcre3 libpcre3-dev zlib1g-dev git brotli patch git unzip cmake libssl-dev -y && \
 
 # Rust
     curl https://sh.rustup.rs -sSf | sh -s -- -y && \
