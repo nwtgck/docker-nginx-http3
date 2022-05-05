@@ -3,9 +3,11 @@ name: Docker Image CI
 
 on:
   push:
+    paths:
       - Dockerfile
       - .github/workflows/ci.yml
   pull_request:
+    paths:
       - Dockerfile
       - .github/workflows/ci.yml
   workflow_dispatch:
