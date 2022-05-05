@@ -52,6 +52,8 @@ jobs:
         mkdir -p $SSL_CERTS_PATH
         openssl req  -nodes -new -x509 -subj '/CN=*' -sha256 -keyout $SSL_CERTS_PATH/privkey.pem -out $SSL_CERTS_PATH/fullchain.pem -days 365000
     # TODO: Make "Install HTTP/3 client" and "Build Docker image" parallel
+    - name: Build Docker image
+      run: docker build -t nginx-http3 .
     - name: Install HTTP/3 client
       run: |
         set -eu
@@ -64,8 +66,6 @@ jobs:
         # (from: https://stackoverflow.com/questions/5724513/in-git-how-do-i-figure-out-what-my-current-revision-is/5724755#5724755)
         git rev-parse HEAD
         cargo build --examples
-    - name: Build Docker image
-      run: docker build -t nginx-http3 .
     - name: Run HTTP/3 server
       run: |
         docker run -d -p 443:443 -p 443:443/udp \
