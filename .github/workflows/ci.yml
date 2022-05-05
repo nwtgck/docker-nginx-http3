@@ -60,8 +60,16 @@ jobs:
           
     - name: Show Nginx version
       run: docker run --rm nginx-http3 /usr/sbin/nginx -V
-      
+
+    - name: Cache http3 Client
+      id: cache
+      uses: actions/cache@v3
+      with:
+        path: quiche/target/debug/examples/http3-client
+        key: cache
+
     - name: Install HTTP/3 client
+      if: steps.cache.outputs.cache-hit != 'true'
       run: |
         set -eu
         # Install Rust
@@ -85,5 +93,4 @@ jobs:
     - name: HTTP/3 connection test
       run: |
         set -eu
-        cd quiche/target/debug/examples
-        RUST_BACKTRACE=1 RUST_LOG="info" ./http3-client --no-verify https://localhost
+        RUST_BACKTRACE=1 RUST_LOG="info" quiche/target/debug/examples/http3-client --no-verify https://localhost
