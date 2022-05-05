@@ -34,7 +34,7 @@ RUN rm /etc/apt/sources.list && \
     cd incubator-pagespeed-ngx-master && curl https://dist.apache.org/repos/dist/release/incubator/pagespeed/${PAGESPEED_INCUBATOR_VERSION}/x64/psol-${PAGESPEED_INCUBATOR_VERSION}-apache-incubating-x64.tar.gz | tar zx && \
 
 # Brotli
-    cd /app/build && \
+    cd /build && \
     git clone --recursive https://github.com/google/ngx_brotli && \
 
 # Quiche
@@ -42,14 +42,14 @@ RUN rm /etc/apt/sources.list && \
     cd quiche && \
     git checkout tags/${QUICHE_VERSION} && \
     rustup override set nightly && \
-    cd /app/build && \
+    cd /build && \
     mv quiche/nginx/nginx-${QUICHE_NGINX_PATCH_1}.patch bundle/${NGINX_VERSION}/nginx-${QUICHE_NGINX_PATCH_1}.patch && \
     curl -L https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/patches/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch -o bundle/${NGINX_VERSION}/nginx-http3-1.19.7.patch && \
     cd bundle/${NGINX_VERSION} && patch -p01 < nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0 && \
-    cd /app/build/bundle/${NGINX_VERSION} && patch -p01 < nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0 && \
+    cd /build/bundle/${NGINX_VERSION} && patch -p01 < nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0 && \
 
 # Configure & Build & Install
-    cd /app/build && ./configure \
+    cd /build && ./configure \
     --prefix=$PWD \
     --sbin-path=/usr/sbin/nginx \
     --modules-path=/usr/lib/nginx/modules \
@@ -91,10 +91,10 @@ RUN rm /etc/apt/sources.list && \
     --with-stream_realip_module \
     --with-stream_ssl_module \
     --with-stream_ssl_preread_module \
-    --add-module=/app/build/incubator-pagespeed-ngx-master \
-    --add-module=/app/build/ngx_brotli \
-    --with-openssl=/app/build/quiche/quiche/deps/boringssl \
-    --with-quiche=/app/build/quiche && \
+    --add-module=/build/incubator-pagespeed-ngx-master \
+    --add-module=/build/ngx_brotli \
+    --with-openssl=/build/quiche/quiche/deps/boringssl \
+    --with-quiche=/build/quiche && \
     make -j2  && \
     make install && \
     rm -rf /build && \
