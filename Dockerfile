@@ -92,7 +92,7 @@ RUN cd build && ./configure \
 
 # Cleanup
 RUN rm -rf /build && \
-   apt purge -y curl git build-essential cmake golang-go patch wget unzip && \
+#   apt purge -y curl git build-essential cmake golang-go patch wget unzip && \
    apt autoclean && apt clean && apt autoremove -y && \
    rustup self uninstall -y && \
    rm -rf /var/lib/apt/lists/*
