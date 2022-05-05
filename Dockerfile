@@ -107,6 +107,7 @@ LABEL maintainer="Ryo Ota <nwtgck@nwtgck.org>"
 COPY --from=builder /build /build
 
 # update
+ENV DEBIAN_FRONTEND=noninteractive
 RUN rm /etc/apt/sources.list && \
     echo "deb http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list && \
     echo "deb http://deb.debian.org/debian/ bullseye-updates main" >> /etc/apt/sources.list && \
