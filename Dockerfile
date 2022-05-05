@@ -1,6 +1,7 @@
 FROM debian:bullseye-slim as builder
 
-ENV PATH="/root/.cargo/bin:${PATH}" \
+ENV DEBIAN_FRONTEND=noninteractive \
+    PATH="/root/.cargo/bin:${PATH}" \
 # Versions
     NGINX_VERSION=nginx-1.21.4 \
     OPENRESTY_VERSION=openresty-1.21.4.1rc3 \
