@@ -88,7 +88,7 @@ RUN cd build && ./configure \
     --add-module=/build/ngx_brotli \
     --with-openssl=/build/quiche/quiche/deps/boringssl \
     --with-quiche=/build/quiche \
-    && make -j2 && make install && rm -rf /build
+    && make -j2 && make install && rm -rf /build && ln -s /usr/local/lib/libluajit-5.1.so.2 /lib64/libluajit-5.1.so.2
 
 # Cleanup
 RUN rm -rf /build && \
