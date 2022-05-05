@@ -93,10 +93,9 @@ RUN cd build && ./configure \
     && make -j2 && make install && rm -rf /build
 
 # Cleanup
-#RUN rm -rf /build && \
-#   apt purge -y curl git build-essential cmake golang-go patch wget unzip && \
-#   apt autoclean && apt clean && apt autoremove -y && \
-#   rustup self uninstall -y && \
-#   rm -rf /var/lib/apt/lists/*
+RUN rm -rf /build && \
+   apt purge -y curl git build-essential cmake make golang-go patch wget unzip && \
+   apt autoclean && apt clean && apt autoremove -y && \
+   rustup self uninstall -y
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
