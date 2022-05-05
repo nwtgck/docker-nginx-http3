@@ -46,7 +46,7 @@ jobs:
                 pagespeed FileCachePath /var/ngx_pagespeed_cache;                                                                                                                                                                                                                                                                                                                                                                                                                           
                 
                 brotli on;                                                                                                                                                                                                                            
-                brotli_comp_level 6;+
+                brotli_comp_level 6;
 
                 brotli_static on;                                                                                                                                                                                                                     
                 brotli_types application/atom+xml application/javascript application/json application/rss+xml                                                                                                                                                      
