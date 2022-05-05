@@ -105,7 +105,7 @@ RUN rm /etc/apt/sources.list && \
     echo "deb http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list && \
     echo "deb http://deb.debian.org/debian/ bullseye-updates main" >> /etc/apt/sources.list && \
     echo "deb http://security.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list && \
-    apt update -y && apt upgrade -y --allow-downgrades && apt dist-upgrade -y --allow-downgrades && apt autoclean && apt clean && apt autoremove -y && \
+    apt update -y && apt upgrade -y --allow-downgrades && apt dist-upgrade -y --allow-downgrades && apt autoclean && apt clean && apt autoremove -y && apt -o DPkg::Options::="--force-confnew" -y install make && \
 # install & clean up
     cd /build && \
     make install && \
