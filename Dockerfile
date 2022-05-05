@@ -1,24 +1,21 @@
-FROM debian:bullseye-slim
-ENV DEBIAN_FRONTEND=noninteractive
-ENV PATH="/root/.cargo/bin:${PATH}"
+FROM debian:bullseye-slim as builder
 
-LABEL maintainer="Ryo Ota <nwtgck@nwtgck.org>"
-
+ENV DEBIAN_FRONTEND=noninteractive \
+    PATH="/root/.cargo/bin:${PATH}" \
 # Versions
-ENV NGINX_VERSION=nginx-1.21.4
-ENV OPENRESTY_VERSION=openresty-1.21.4.1rc3
-ENV QUICHE_NGINX_PATCH_1=1.16
-ENV QUICHE_NGINX_PATCH_2=1.19.7
-ENV QUICHE_VERSION=0.12.0
-ENV PAGESPEED_INCUBATOR_VERSION=1.14.36.1
+    NGINX_VERSION=nginx-1.21.4 \
+    OPENRESTY_VERSION=openresty-1.21.4.1rc3 \
+    QUICHE_NGINX_PATCH_1=1.16 \
+    QUICHE_NGINX_PATCH_2=1.19.7 \
+    QUICHE_VERSION=0.12.0 \
+    PAGESPEED_INCUBATOR_VERSION=1.14.36.1
 
 # Requirements
 RUN rm /etc/apt/sources.list && \
     echo "deb http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list && \
     echo "deb http://deb.debian.org/debian/ bullseye-updates main" >> /etc/apt/sources.list && \
     echo "deb http://security.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list && \
-
-    apt update -y && apt upgrade -y --allow-downgrades && apt dist-upgrade -y --allow-downgrades && apt autoclean && apt clean && apt autoremove -y && apt -o DPkg::Options::="--force-confnew" -y install libcrypt1 libc-dev-bin libc-devtools libc6-dev-amd64-cross libc6-amd64-cross uuid-dev make build-essential curl wget libpcre3 libpcre3-dev zlib1g-dev git brotli patch git unzip cmake libssl-dev perl -y && \
+    apt update -y && apt upgrade -y --allow-downgrades && apt dist-upgrade -y --allow-downgrades && apt autoclean && apt clean && apt autoremove -y && apt -o DPkg::Options::="--force-confnew" -y install python3 python3-pip libcrypt1 libc-dev-bin libc-devtools libc6-dev-amd64-cross libc6-amd64-cross uuid-dev make build-essential curl wget libpcre3 libpcre3-dev zlib1g-dev git brotli patch git unzip cmake libssl-dev perl certbot -y && \
 
 # Rust
     curl https://sh.rustup.rs -sSf | sh -s -- -y && \
@@ -49,7 +46,7 @@ RUN rm /etc/apt/sources.list && \
     cd bundle/${NGINX_VERSION} && patch -p01 < nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0 && \
     cd /build/bundle/${NGINX_VERSION} && patch -p01 < nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0 && \
 
-# Configure & Build & Install
+# configure & build
     cd /build && ./configure \
     --prefix=$PWD \
     --sbin-path=/usr/sbin/nginx \
@@ -96,14 +93,23 @@ RUN rm /etc/apt/sources.list && \
     --add-module=/build/ngx_brotli \
     --with-openssl=/build/quiche/quiche/deps/boringssl \
     --with-quiche=/build/quiche && \
-    make -j2  && \
-    make install && \
-    rm -rf /build && \
+    make -j2
+   
+FROM debian:bullseye-slim
+LABEL maintainer="Ryo Ota <nwtgck@nwtgck.org>"
 
-# Cleanup
-   rm -rf /build && \
-   apt purge -y curl git build-essential cmake make golang-go patch wget unzip && \
-   apt autoclean && apt clean && apt autoremove -y && \
-   rustup self uninstall -y
+COPY --from=builder /build /build
+
+# update
+RUN rm /etc/apt/sources.list && \
+    echo "deb http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list && \
+    echo "deb http://deb.debian.org/debian/ bullseye-updates main" >> /etc/apt/sources.list && \
+    echo "deb http://security.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list && \
+    apt update -y && apt upgrade -y --allow-downgrades && apt dist-upgrade -y --allow-downgrades && apt autoclean && apt clean && apt autoremove -y && \
+# install & clean up
+    cd /build && \
+    make install && \
+    rm -rf /build
+
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
