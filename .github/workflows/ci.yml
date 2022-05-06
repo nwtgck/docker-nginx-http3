@@ -105,4 +105,4 @@ jobs:
     - name: HTTP/3 connection test
       run: |
         set -eu
-        RUST_BACKTRACE=1 RUST_LOG="info" quiche/target/debug/examples/http3-client --no-verify https://localhost
+        RUST_BACKTRACE=1 RUST_LOG="info" quiche/target/debug/examples/http3-client https://localhost
