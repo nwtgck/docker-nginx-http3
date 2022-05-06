@@ -122,7 +122,10 @@ RUN rm /etc/apt/sources.list && \
 # install & clean up
     cd /build && \
     make install && \
-    rm -rf /build
+    cp -r /build/luajit /luajit && \
+    rm -rf /build && \
+    mkdir /build && \
+    mv /luajit /build/luajit
 
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
