@@ -123,9 +123,11 @@ RUN rm /etc/apt/sources.list && \
     cd /build && \
     make install && \
     cp -r /build/luajit /luajit && \
+    cp -r /build/site /site && \
     rm -rf /build && \
     mkdir /build && \
     mv /luajit /build/luajit
+    mv /site /build/site
 
 
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
