@@ -48,7 +48,7 @@ RUN rm /etc/apt/sources.list && \
     mv ${NGINX_VERSION}/auto/configure ${NGINX_VERSION}/configure && \
 
 # configure & build
-RUN cd /build && ./configure \
+    cd /build && ./configure \
     --prefix=$PWD \
     --sbin-path=/usr/sbin/nginx \
     --modules-path=/usr/lib/nginx/modules \
