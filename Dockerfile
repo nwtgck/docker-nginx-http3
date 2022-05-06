@@ -123,5 +123,4 @@ RUN rm /etc/apt/sources.list && \
     cd /build && \
     make install
 
-
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
