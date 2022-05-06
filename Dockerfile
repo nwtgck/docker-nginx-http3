@@ -126,7 +126,7 @@ RUN rm /etc/apt/sources.list && \
     cp -r /build/site /site && \
     rm -rf /build && \
     mkdir /build && \
-    mv /luajit /build/luajit
+    mv /luajit /build/luajit && \
     mv /site /build/site
 
 
