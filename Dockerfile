@@ -3,12 +3,14 @@ FROM debian:bullseye-slim as builder
 ENV DEBIAN_FRONTEND=noninteractive \
     PATH="/root/.cargo/bin:${PATH}" \
 # Versions
-    NGINX_VERSION=nginx-1.21.4 \
     OPENRESTY_VERSION=openresty-1.21.4.1rc3 \
+    NGINX_VERSION_NUMBER=1.21.4 \
+    NGINX_VERSION=nginx-1.21.4 \
+    NGINX_QUIC_FOLDER_NAME=nginx-quic-release-1.21.4 \
+    PAGESPEED_INCUBATOR_VERSION=1.14.36.1 \
     QUICHE_NGINX_PATCH_1=1.16 \
     QUICHE_NGINX_PATCH_2=1.19.7 \
-    QUICHE_VERSION=0.12.0 \
-    PAGESPEED_INCUBATOR_VERSION=1.14.36.1
+    QUICHE_VERSION=0.12.0
 
 # Requirements
 RUN rm /etc/apt/sources.list && \
@@ -28,7 +30,7 @@ RUN rm /etc/apt/sources.list && \
     rustup toolchain install nightly && \
 
 # Openresty Install
-    curl "https://openresty.org/download/${OPENRESTY_VERSION}.tar.gz" | tar zx && \
+    curl https://openresty.org/download/${OPENRESTY_VERSION}.tar.gz | tar zx && \
     mv ${OPENRESTY_VERSION} build && \
 
 # Pagespeed
@@ -41,16 +43,12 @@ RUN rm /etc/apt/sources.list && \
     cd /build && \
     git clone --recursive https://github.com/google/ngx_brotli && \
 
-# Quiche
-    git clone --recursive https://github.com/cloudflare/quiche && \
-    cd quiche && \
-    git checkout tags/${QUICHE_VERSION} && \
-    rustup override set nightly && \
-    cd /build && \
-    mv quiche/nginx/nginx-${QUICHE_NGINX_PATCH_1}.patch bundle/${NGINX_VERSION}/nginx-${QUICHE_NGINX_PATCH_1}.patch && \
-    curl -L https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/patches/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch -o bundle/${NGINX_VERSION}/nginx-http3-1.19.7.patch
-RUN cd /build/bundle/${NGINX_VERSION} && patch -p01 < nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0
-RUN cd /build/bundle/${NGINX_VERSION} && patch -p01 < nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0
+# Nginx-Quic
+    cd /build/bundle && \
+    rm -rf ${NGINX_VERSION} && \
+    curl https://hg.nginx.org/nginx-quic/archive/release-${NGINX_VERSION_NUMBER}.tar.gz | tar zx && \
+    mv ${NGINX_QUIC_FOLDER_NAME} ${NGINX_VERSION} && \
+    mv ${NGINX_VERSION}/auto/configure ${NGINX_VERSION}/configure && \
 
 # configure & build
 RUN cd /build && ./configure \
