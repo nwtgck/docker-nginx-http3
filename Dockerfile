@@ -7,10 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     NGINX_VERSION_NUMBER=1.21.4 \
     NGINX_VERSION=nginx-1.21.4 \
     NGINX_QUIC_FOLDER_NAME=nginx-quic-release-1.21.4 \
-    PAGESPEED_INCUBATOR_VERSION=1.14.36.1 \
-    QUICHE_NGINX_PATCH_1=1.16 \
-    QUICHE_NGINX_PATCH_2=1.19.7 \
-    QUICHE_VERSION=0.12.0
+    PAGESPEED_INCUBATOR_VERSION=1.14.36.1
 
 # Requirements
 RUN rm /etc/apt/sources.list && \
