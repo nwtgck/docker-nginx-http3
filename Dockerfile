@@ -32,14 +32,14 @@ RUN rm /etc/apt/sources.list && \
     mv ${OPENRESTY_VERSION} build && \
 
 # Pagespeed
-    cd build && \
-    wget "https://github.com/apache/incubator-pagespeed-ngx/archive/refs/heads/master.zip" && \
-    unzip master.zip && \
-    cd incubator-pagespeed-ngx-master && curl https://dist.apache.org/repos/dist/release/incubator/pagespeed/${PAGESPEED_INCUBATOR_VERSION}/x64/psol-${PAGESPEED_INCUBATOR_VERSION}-apache-incubating-x64.tar.gz | tar zx && \
+#    cd build && \
+#    wget "https://github.com/apache/incubator-pagespeed-ngx/archive/refs/heads/master.zip" && \
+#    unzip master.zip && \
+#    cd incubator-pagespeed-ngx-master && curl https://dist.apache.org/repos/dist/release/incubator/pagespeed/${PAGESPEED_INCUBATOR_VERSION}/x64/psol-${PAGESPEED_INCUBATOR_VERSION}-apache-incubating-x64.tar.gz | tar zx && \
 
 # Brotli
-    cd /build && \
-    git clone --recursive https://github.com/google/ngx_brotli && \
+#    cd /build && \
+#    git clone --recursive https://github.com/google/ngx_brotli && \
 
 # Quiche
     git clone --recursive https://github.com/cloudflare/quiche && \
@@ -95,8 +95,8 @@ RUN cd /build && ./configure \
     --with-stream_realip_module \
     --with-stream_ssl_module \
     --with-stream_ssl_preread_module \
-    --add-module=/build/incubator-pagespeed-ngx-master \
-    --add-module=/build/ngx_brotli \
+#    --add-module=/build/incubator-pagespeed-ngx-master \
+#    --add-module=/build/ngx_brotli \
     --with-openssl=/build/quiche/quiche/deps/boringssl \
     --with-quiche=/build/quiche && \
     make -j2
