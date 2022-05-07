@@ -72,34 +72,6 @@ jobs:
           
     - name: Show Nginx version
       run: docker run --rm nginx-http3:latest /usr/sbin/nginx -V
-
-    - name: HTTP/3 curl Install
-      run: |
-       git clone --depth 1 --recursive https://github.com/nibanks/msh3
-       cd msh3 && mkdir build && cd build
-       cmake -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
-       cmake --build .
-       cmake --install .
-       git clone https://github.com/curl/curl
-       cd curl
-       autoreconf -fi
-       ./configure LDFLAGS="-Wl,-rpath,/usr/local/lib" --with-msh3=/usr/local --with-openssl
-       make
-       make install
-
-    - name: Install HTTP/3 client
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: |
-        set -eu
-        # Install Rust
-        curl https://sh.rustup.rs -sSf | sh -s -- -y
-        # Build HTTP/3 client
-        git clone --recursive https://github.com/cloudflare/quiche.git
-        cd quiche
-        # Show current revision
-        # (from: https://stackoverflow.com/questions/5724513/in-git-how-do-i-figure-out-what-my-current-revision-is/5724755#5724755)
-        git rev-parse HEAD
-        cargo build --examples
         
     - name: Run HTTP/3 server
       run: |
@@ -111,4 +83,4 @@ jobs:
       
     - name: HTTP/3 connection test
       run: |
-        curl -L --insecure --http3 https://localhost -I -p
+        docker run -it --net host dalgibbard/curl-http3 -L --insecure --http3 https://localhost:443 -I -p
