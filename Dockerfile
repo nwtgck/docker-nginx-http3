@@ -3,7 +3,7 @@ FROM debian:bullseye-slim as builder
 ENV DEBIAN_FRONTEND=noninteractive \
     PATH="/root/.cargo/bin:${PATH}" \
 # Versions
-    NGINX_VERSION=nginx-1.19.6 \
+    NGINX_VERSION=nginx-1.16.1 \
     OPENRESTY_VERSION=openresty-1.21.4.1rc3 \
     QUICHE_NGINX_PATCH_1=1.16 \
     QUICHE_NGINX_PATCH_2=1.19.7 \
@@ -56,8 +56,8 @@ RUN rm /etc/apt/sources.list && \
 #    curl -L https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/patches/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch -o bundle/${NGINX_VERSION}/nginx-http3-1.19.7.patch
 #RUN cd /build/bundle/${NGINX_VERSION} && patch -p01 < nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0
 #RUN cd /build/bundle/${NGINX_VERSION} && patch -p01 < nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0
-    mv quiche/nginx/nginx-${QUICHE_NGINX_PATCH_1}.patch ./nginx-${QUICHE_NGINX_PATCH_1}.patch && \
-    curl -L https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/patches/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch -o ./nginx-http3-${QUICHE_NGINX_PATCH_2}.patch
+    curl -L https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/patches/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch -o ./nginx-http3-${QUICHE_NGINX_PATCH_2}.patch && \
+    mv quiche/nginx/nginx-${QUICHE_NGINX_PATCH_1}.patch ./nginx-${QUICHE_NGINX_PATCH_1}.patch
 RUN cd /build && patch -p01 < ./nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0
 #RUN cd /build && patch -p01 < ./nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0
 
