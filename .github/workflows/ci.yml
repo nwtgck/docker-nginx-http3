@@ -41,7 +41,7 @@ jobs:
                 ssl_protocols TLSv1.2 TLSv1.3;
 
                 # Add Alt-Svc header to negotiate HTTP/3.
-                add_header alt-svc 'h3-29=":443"; ma=86400';
+                add_header alt-svc 'h3=":443"; ma=86400, h3-29=":443"; ma=86400';
                 pagespeed on;                                                                                                                                                                                                                         
                 pagespeed FileCachePath /var/ngx_pagespeed_cache;                                                                                                                                                                                                                                                                                                                                                                                                                           
                 
@@ -104,6 +104,4 @@ jobs:
       
     - name: HTTP/3 connection test
       run: |
-        set -eu
-        cd quiche/target/debug/examples/
-        RUST_BACKTRACE=1 RUST_LOG="info" ./http3-client https://localhost
+        curl -L --insecure --http3 https://localhost -I -p
