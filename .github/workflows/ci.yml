@@ -28,6 +28,9 @@ jobs:
 
         http {
             server {
+                # Enable QUIC and HTTP/3.
+                listen 443 quic reuseport;
+            
                 # Enable HTTP/2 (optional).
                 listen 443 ssl http2;
 
@@ -102,4 +105,5 @@ jobs:
     - name: HTTP/3 connection test
       run: |
         set -eu
-        RUST_BACKTRACE=1 RUST_LOG="info" quiche/target/debug/examples/http3-client https://localhost
+        cd quiche/target/debug/examples/
+        RUST_BACKTRACE=1 RUST_LOG="info" ./http3-client https://localhost
