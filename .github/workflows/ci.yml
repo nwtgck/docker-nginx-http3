@@ -28,9 +28,6 @@ jobs:
 
         http {
             server {
-                # Enable QUIC and HTTP/3.
-                listen 443 quic reuseport;
-
                 # Enable HTTP/2 (optional).
                 listen 443 ssl http2;
 
@@ -41,7 +38,7 @@ jobs:
                 ssl_protocols TLSv1.2 TLSv1.3;
 
                 # Add Alt-Svc header to negotiate HTTP/3.
-                add_header alt-svc 'h3-23=":443"; ma=86400';
+                add_header alt-svc 'h3-29=":443"; ma=86400';
                 pagespeed on;                                                                                                                                                                                                                         
                 pagespeed FileCachePath /var/ngx_pagespeed_cache;                                                                                                                                                                                                                                                                                                                                                                                                                           
                 
