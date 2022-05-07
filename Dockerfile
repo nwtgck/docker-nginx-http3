@@ -58,8 +58,8 @@ RUN rm /etc/apt/sources.list && \
 #RUN cd /build/bundle/${NGINX_VERSION} && patch -p01 < nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0
     mv quiche/nginx/nginx-${QUICHE_NGINX_PATCH_1}.patch ./nginx-${QUICHE_NGINX_PATCH_1}.patch && \
     curl -L https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/patches/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch -o ./nginx-http3-${QUICHE_NGINX_PATCH_2}.patch
-RUN patch -p01 < ./nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0
-RUN patch -p01 < ./nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0
+RUN cd /build && patch -p01 < ./nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0
+RUN cd /build && patch -p01 < ./nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0
 
 # configure & build
 RUN cd /build && ./configure \
