@@ -68,17 +68,24 @@ jobs:
     # TODO: Make "Install HTTP/3 client" and "Build Docker image" parallel
     
     - name: Build Docker image
-      run: docker build -t nginx-http3 .
+      run: docker build -t nginx-http3:latest .
           
     - name: Show Nginx version
-      run: docker run --rm nginx-http3 /usr/sbin/nginx -V
+      run: docker run --rm nginx-http3:latest /usr/sbin/nginx -V
 
-#    - name: Cache http3 Client
-#      id: cache
-#      uses: actions/cache@v3
-#      with:
-#        path: quiche/target/debug/examples/http3-client
-#        key: cache
+    - name: HTTP/3 curl Install
+      run: |
+       git clone --depth 1 --recursive https://github.com/nibanks/msh3
+       cd msh3 && mkdir build && cd build
+       cmake -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+       cmake --build .
+       cmake --install .
+       git clone https://github.com/curl/curl
+       cd curl
+       autoreconf -fi
+       ./configure LDFLAGS="-Wl,-rpath,/usr/local/lib" --with-msh3=/usr/local --with-openssl
+       make
+       make install
 
     - name: Install HTTP/3 client
       if: steps.cache.outputs.cache-hit != 'true'
