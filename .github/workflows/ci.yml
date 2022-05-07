@@ -83,4 +83,4 @@ jobs:
       
     - name: HTTP/3 connection test
       run: |
-        docker run --net host rajanandsharma/http3-curl-client curl -L --insecure --http3 https://localhost:443 -I -p
+        docker run --rm --net host ymuski/curl-http3 curl -L --insecure --http3 https://localhost:443 -I -p
