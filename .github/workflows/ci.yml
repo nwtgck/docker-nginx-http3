@@ -32,7 +32,7 @@ jobs:
                 listen 443 quic reuseport;
             
                 # Enable HTTP/2 (optional).
-                listen 443 ssl http2;
+                # listen 443 ssl http2;
 
                 ssl_certificate      /etc/ssl/certs/fullchain.pem;
                 ssl_certificate_key  /etc/ssl/private/privkey.pem;
@@ -40,21 +40,21 @@ jobs:
                 # Enable "new" TLS versions (TLSv1.3 is required for QUIC).
                 ssl_protocols TLSv1.2 TLSv1.3;
 
-                # Add Alt-Svc header to negotiate HTTP/3.
-                add_header alt-svc 'h3=":443"; ma=86400, h3-29=":443"; ma=86400';
-
-#                pagespeed on;                                                                                                                                                                                                                         
-#                pagespeed FileCachePath /var/ngx_pagespeed_cache;                                                                                                                                                                                                                                                                                                                                                                                                                           
+                # pagespeed on;                                                                                                                                                                                                                         
+                # pagespeed FileCachePath /var/ngx_pagespeed_cache;                                                                                                                                                                                                                                                                                                                                                                                                                           
                 
-#                brotli on;                                                                                                                                                                                                                            
-#                brotli_comp_level 6;
+                # brotli on;                                                                                                                                                                                                                            
+                # brotli_comp_level 6;
 
-#                brotli_static on;                                                                                                                                                                                                                     
-#                brotli_types application/atom+xml application/javascript application/json application/rss+xml                                                                                                                                                      
-#                application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype                                                                                                                                                 
-#                application/x-font-ttf application/x-javascript application/xhtml+xml application/xml                                                                                                                                                 
-#                font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon                                                                                                                                                  
-#                image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml; 
+                # brotli_static on;                                                                                                                                                                                                                     
+                # brotli_types application/atom+xml application/javascript application/json application/rss+xml                                                                                                                                                      
+                # application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype                                                                                                                                                 
+                # application/x-font-ttf application/x-javascript application/xhtml+xml application/xml                                                                                                                                                 
+                # font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon                                                                                                                                                  
+                # image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml; 
+
+               # Add Alt-Svc header to negotiate HTTP/3.
+               add_header alt-svc 'h3=":443"; ma=86400, h3-29=":443"; ma=86400';
             }
         }
         EOF
