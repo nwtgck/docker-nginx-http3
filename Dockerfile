@@ -28,8 +28,12 @@ RUN rm /etc/apt/sources.list && \
     rustup toolchain install nightly && \
 
 # Openresty Install
-    curl https://openresty.org/download/${OPENRESTY_VERSION}.tar.gz | tar zx && \
-    mv ${OPENRESTY_VERSION} build && \
+#    curl https://openresty.org/download/${OPENRESTY_VERSION}.tar.gz | tar zx && \
+#    mv ${OPENRESTY_VERSION} build && \
+
+# Nginx Install
+    curl https://nginx.org/download/${NGINX_VERSION}.tar.gz | tar zx && \
+    mv ${NGINX_VERSION} build && \
 
 # Pagespeed
 #    cd build && \
@@ -48,10 +52,14 @@ RUN rm /etc/apt/sources.list && \
     git checkout tags/${QUICHE_VERSION} && \
     rustup override set nightly && \
     cd /build && \
-    mv quiche/nginx/nginx-${QUICHE_NGINX_PATCH_1}.patch bundle/${NGINX_VERSION}/nginx-${QUICHE_NGINX_PATCH_1}.patch && \
-    curl -L https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/patches/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch -o bundle/${NGINX_VERSION}/nginx-http3-1.19.7.patch
-RUN cd /build/bundle/${NGINX_VERSION} && patch -p01 < nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0
-RUN cd /build/bundle/${NGINX_VERSION} && patch -p01 < nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0
+#    mv quiche/nginx/nginx-${QUICHE_NGINX_PATCH_1}.patch bundle/${NGINX_VERSION}/nginx-${QUICHE_NGINX_PATCH_1}.patch && \
+#    curl -L https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/patches/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch -o bundle/${NGINX_VERSION}/nginx-http3-1.19.7.patch
+#RUN cd /build/bundle/${NGINX_VERSION} && patch -p01 < nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0
+#RUN cd /build/bundle/${NGINX_VERSION} && patch -p01 < nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0
+    mv quiche/nginx/nginx-${QUICHE_NGINX_PATCH_1}.patch ./nginx-${QUICHE_NGINX_PATCH_1}.patch && \
+    curl -L https://raw.githubusercontent.com/angristan/nginx-autoinstall/master/patches/nginx-http3-${QUICHE_NGINX_PATCH_2}.patch -o ./nginx-http3-${QUICHE_NGINX_PATCH_2}.patch
+RUN patch -p01 < nginx-${QUICHE_NGINX_PATCH_1}.patch; exit 0
+RUN patch -p01 < nginx-http3-${QUICHE_NGINX_PATCH_2}.patch; exit 0
 
 # configure & build
 RUN cd /build && ./configure \
