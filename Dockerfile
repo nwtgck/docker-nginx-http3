@@ -42,6 +42,7 @@ RUN rm /etc/apt/sources.list && \
 #    git clone --recursive https://github.com/google/ngx_brotli && \
 
 # Quiche
+    cd /build
     git clone --recursive https://github.com/cloudflare/quiche && \
     cd quiche && \
     git checkout tags/${QUICHE_VERSION} && \
