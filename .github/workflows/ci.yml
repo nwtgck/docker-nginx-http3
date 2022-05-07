@@ -73,12 +73,12 @@ jobs:
     - name: Show Nginx version
       run: docker run --rm nginx-http3 /usr/sbin/nginx -V
 
-    - name: Cache http3 Client
-      id: cache
-      uses: actions/cache@v3
-      with:
-        path: quiche/target/debug/examples/http3-client
-        key: cache
+#    - name: Cache http3 Client
+#      id: cache
+#      uses: actions/cache@v3
+#      with:
+#        path: quiche/target/debug/examples/http3-client
+#        key: cache
 
     - name: Install HTTP/3 client
       if: steps.cache.outputs.cache-hit != 'true'
